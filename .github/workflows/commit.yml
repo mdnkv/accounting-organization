@@ -1,0 +1,34 @@
+name: Commit Stage
+on: [push]
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Check source code
+        uses: actions/checkout@v3
+      - name: Set Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 26
+          cache: gradle
+      - name: Code vulnerability check
+        uses: anchore/scan-action@v7
+        id: scan
+        with:
+          path: "${{ github.workspace }}"
+          fail-build: false
+          severity-cutoff: high
+      - name: Upload vulnerability report
+        uses: github/codeql-action/upload-sarif@v4
+        if: success() || failure()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: Build and run unit tests
+        run: |
+          chmod +x gradlew
+          ./gradlew build

@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: accounting-organization
+  datasource:
+    url: ${APP_DB_URL}
+    username: ${APP_DB_USER}
+    password: ${APP_DB_PASSWORD}
+  flyway:
+    user: ${APP_DB_USER}
+    password: ${APP_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  threads:
+    virtual:
+      enabled: true
+server:
+  port: ${HTTP_PORT}
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+    threads:
+      max: 50
+      min-spare: 5
