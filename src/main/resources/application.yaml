@@ -5,6 +5,9 @@ spring:
     url: ${APP_DB_URL}
     username: ${APP_DB_USER}
     password: ${APP_DB_PASSWORD}
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5
   flyway:
     user: ${APP_DB_USER}
     password: ${APP_DB_PASSWORD}
