@@ -41,7 +41,7 @@ jobs:
   package:
     name: Package and publish
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: {build}
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       contents: read
