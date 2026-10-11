@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounting-organization
+  labels:
+    app: accounting-organization
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounting-organization
+  template:
+    metadata:
+      labels:
+        app: accounting-organization
+    spec:
+      containers:
+        - name: accounting-organization
+          image: accounting-organization
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
+            - name: APP_DB_URL
+              value: jdbc:postgresql://accounting-orgaization-db/acc_organization_db
+            - name: APP_DB_USER
+              value: acc_organization_user
+            - name: APP_DB_PASSWORD
+              value: secret1234
