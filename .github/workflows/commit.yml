@@ -62,12 +62,12 @@ jobs:
           ./gradlew bootBuildImage \
           --imageName ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.VERSION}}
       - name: Image vulnerability scan
-        uses: anchore/scan-action@v7
+        uses: anchore/scan-action@v3
         id: scan
         with:
           image: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.VERSION}}
           fail-build: false
-          severity-cutoff: 'medium'high
+          severity-cutoff: high
       - name: Log into registry
         uses: docker/login-action@v2
         with:
