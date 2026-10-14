@@ -29,3 +29,16 @@ spec:
               value: acc_organization_user
             - name: APP_DB_PASSWORD
               value: secret1234
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 15
+
