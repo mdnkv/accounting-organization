@@ -23,12 +23,9 @@ spec:
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: APP_DB_URL
-              value: jdbc:postgresql://accounting-organization-db/acc_organization_db
-            - name: APP_DB_USER
-              value: acc_organization_user
-            - name: APP_DB_PASSWORD
-              value: secret1234
+          volumeMounts:
+            - mountPath: /workspace/config
+              name: accounting-organization-config-volume
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -41,4 +38,8 @@ spec:
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 15
+      volumes:
+        - name: accounting-organization-config-volume
+          configMap:
+            name: accounting-organization-config
 
